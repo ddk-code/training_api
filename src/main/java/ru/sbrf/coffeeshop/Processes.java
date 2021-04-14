@@ -1,6 +1,6 @@
 package ru.sbrf.coffeeshop;
 
-public enum Processes {
+enum Processes {
     AUTHORIZATION(1, "User is successfully authorized", "Authorisation ERROR"),
     PURCHASE (2, "The user has successfully made a purchase", "Purchase ERROR"),
     PAYMENT (3, "User made payment successfully", "Payment error"),

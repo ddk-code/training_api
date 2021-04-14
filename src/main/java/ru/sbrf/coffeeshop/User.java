@@ -1,15 +1,22 @@
 package ru.sbrf.coffeeshop;
 
 public class User {
-    private static int id;
+    private static int counter = 0;
+    private int id;
     private String login;
+
+    public User(String login) {
+        this.login = login;
+        this.id = ++counter;
+    }
 
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        counter += 1;
+        this.id = counter;
     }
 
     public String getLogin() {
@@ -19,15 +26,5 @@ public class User {
     public void setLogin(String login) {
         this.login = login;
     }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-
 
 }

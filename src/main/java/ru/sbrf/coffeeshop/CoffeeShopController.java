@@ -8,26 +8,42 @@ import java.util.HashMap;
 @RestController
 public class CoffeeShopController {
 
-    private static int checker = 0;
-    private static ArrayList<User> users;
+//    private static int checker = 0;
+    private static final ArrayList<User> users = new ArrayList<>();
+    private static Processes process = Processes.AUTHORIZATION;
 
 
     @RequestMapping("/coffeeshop/auth")
     @PostMapping
     public HashMap<String, Object> userAuth(@RequestParam String login) {
-        User user = new User();
+//        checker += 1;
         HashMap<String, Object> hm = new HashMap<>();
-        hm.put("status: ", BD.addUser(user));
-        hm.put("user: ", user.getId() == 0 ? "User wasn't added" : user);
-
+        if (!isUserExist(login) && process == Processes.AUTHORIZATION ) {
+            User user = new User(login);
+            users.add(user);
+            hm.put(process.successMsg, user);
+        } else {
+            hm.put(process.failMsg, "user wasn't added");
+        }
+        process = Processes.PURCHASE;
         return hm;
     }
 
-    @RequestMapping("/coffeeshop/users")
-    @GetMapping
-    public ArrayList<User> getUsers() {
-        return BD.getUsers();
+    private static boolean isUserExist(String login) {
+        for (User user : users) {
+            if (user.getLogin().equals(login)) {
+                return true;
+            }
+        }
+        return false;
     }
 
+
+//    @RequestMapping("/coffeeshop/users")
+//    @GetMapping
+//    public ArrayList<User> getUsers() {
+//        return BD.getUsers();
+//    }
+//
 
 }
