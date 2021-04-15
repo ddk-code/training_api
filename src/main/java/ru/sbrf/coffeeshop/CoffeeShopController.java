@@ -117,9 +117,10 @@ public class CoffeeShopController {
 
     @RequestMapping("/coffeeshop/restart")
     @PostMapping
-    private void restart() {
+    private String restart() {
         currentLogin = null;
         checker = 0;
+        return "System was restarted successfully";
     }
 
 }
