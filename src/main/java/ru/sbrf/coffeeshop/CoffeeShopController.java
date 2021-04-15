@@ -29,7 +29,7 @@ public class CoffeeShopController {
         return "Input login: " + login +
                 "\nERROR" +
                 "\nWrong operation!" +
-                "\nChoose another operation or use /coffeeshop/restart (GET) to start again";
+                "\nChoose another operation or use /coffeeshop/restart (POST) to start again";
     }
 
     @RequestMapping("/coffeeshop/purchase")
@@ -41,7 +41,7 @@ public class CoffeeShopController {
             return "Input login: " + login +
                     "\nERROR!" +
                     "\nWrong operation! First you need to authorize" +
-                    "\nAuthorize or use /coffeeshop/restart (GET) to start again";
+                    "\nAuthorize or use /coffeeshop/restart (POST) to start again";
         }
         if (login.equals(currentLogin) && checker == 2) {
             return "Input login: " + login + "\nUser has successfully made a purchase";
@@ -56,7 +56,7 @@ public class CoffeeShopController {
         return "Input login: " + login +
                 "\nERROR" +
                 "\nWrong operation!" +
-                "\nChoose another operation or use /coffeeshop/restart (GET) to start again";
+                "\nChoose another operation or use /coffeeshop/restart (POST) to start again";
     }
 
     @RequestMapping("/coffeeshop/payment")
@@ -68,7 +68,7 @@ public class CoffeeShopController {
             return "Input login: " + login +
                     "\nERROR!" +
                     "\nWrong operation! First you need to authorize" +
-                    "\nAuthorize or use /coffeeshop/restart (GET) to start again";
+                    "\nAuthorize or use /coffeeshop/restart (POST) to start again";
         }
         if (login.equals(currentLogin) && checker == 3) {
             return "Input login: " + login + "\nUser has paid successfully";
@@ -83,7 +83,7 @@ public class CoffeeShopController {
         return "Input login: " + login +
                 "\nERROR" +
                 "\nWrong operation!" +
-                "\nChoose another operation or use /coffeeshop/restart (GET) to start again";
+                "\nChoose another operation or use /coffeeshop/restart (POST) to start again";
     }
 
     @RequestMapping("/coffeeshop/feedback")
@@ -95,7 +95,7 @@ public class CoffeeShopController {
             return "Input login: " + login +
                     "\nERROR!" +
                     "\nWrong operation! First you need to authorize" +
-                    "\nAuthorize or use /coffeeshop/restart (GET) to start again";
+                    "\nAuthorize or use /coffeeshop/restart (POST) to start again";
         }
         if (login.equals(currentLogin) && checker == 4) {
             restart();
@@ -112,7 +112,7 @@ public class CoffeeShopController {
         return "Input login: " + login +
                 "\nERROR" +
                 "\nWrong operation!" +
-                "\nChoose another operation or use /coffeeshop/restart (GET) to start again";
+                "\nChoose another operation or use /coffeeshop/restart (POST) to start again";
     }
 
     @RequestMapping("/coffeeshop/restart")
