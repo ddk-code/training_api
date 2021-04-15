@@ -2,48 +2,124 @@ package ru.sbrf.coffeeshop;
 
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 @RestController
 public class CoffeeShopController {
 
-//    private static int checker = 0;
-    private static final ArrayList<User> users = new ArrayList<>();
-    private static Processes process = Processes.AUTHORIZATION;
+    private static int checker;
+    private static String currentLogin;
 
 
     @RequestMapping("/coffeeshop/auth")
     @PostMapping
-    public HashMap<String, Object> userAuth(@RequestParam String login) {
-//        checker += 1;
-        HashMap<String, Object> hm = new HashMap<>();
-        if (!isUserExist(login) && process == Processes.AUTHORIZATION ) {
-            User user = new User(login);
-            users.add(user);
-            hm.put(process.successMsg, user);
-        } else {
-            hm.put(process.failMsg, "user wasn't added");
+    public String userAuth(@RequestParam String login) {
+        checker += 1;
+        if (currentLogin == null) {
+            currentLogin = login;
         }
-        process = Processes.PURCHASE;
-        return hm;
+        if (login.equals(currentLogin) && checker == 1) {
+            return "Input login: " + login + "\nUser was successfully authorized";
+        } else if (!login.equals(currentLogin)) {
+            restart();
+            return "Input login: " + login +
+                    "\nERROR" +
+                    "\nCurrent session was opened for another user" +
+                    "\nSession has been closed";
+        }
+        checker -= 1;
+        return "Input login: " + login +
+                "\nERROR" +
+                "\nWrong operation!" +
+                "\nChoose another operation or use /coffeeshop/restart (GET) to start again";
     }
 
-    private static boolean isUserExist(String login) {
-        for (User user : users) {
-            if (user.getLogin().equals(login)) {
-                return true;
-            }
+    @RequestMapping("/coffeeshop/purchase")
+    @PostMapping
+    public String purchase(@RequestParam String login) {
+        checker += 1;
+        if (currentLogin == null) {
+            checker -= 1;
+            return "Input login: " + login +
+                    "\nERROR!" +
+                    "\nWrong operation! First you need to authorize" +
+                    "\nAuthorize or use /coffeeshop/restart (GET) to start again";
         }
-        return false;
+        if (login.equals(currentLogin) && checker == 2) {
+            return "Input login: " + login + "\nUser has successfully made a purchase";
+        } else if (!login.equals(currentLogin)) {
+            restart();
+            return "Input login: " + login +
+                    "\nERROR" +
+                    "\nCurrent session was opened for another user" +
+                    "\nSession has been closed";
+        }
+        checker -= 1;
+        return "Input login: " + login +
+                "\nERROR" +
+                "\nWrong operation!" +
+                "\nChoose another operation or use /coffeeshop/restart (GET) to start again";
     }
 
+    @RequestMapping("/coffeeshop/payment")
+    @PostMapping
+    public String payment(@RequestParam String login) {
+        checker += 1;
+        if (currentLogin == null) {
+            checker -= 1;
+            return "Input login: " + login +
+                    "\nERROR!" +
+                    "\nWrong operation! First you need to authorize" +
+                    "\nAuthorize or use /coffeeshop/restart (GET) to start again";
+        }
+        if (login.equals(currentLogin) && checker == 3) {
+            return "Input login: " + login + "\nUser has paid successfully";
+        } else if (!login.equals(currentLogin)) {
+            restart();
+            return "Input login: " + login +
+                    "\nERROR" +
+                    "\nCurrent session was opened for another user" +
+                    "\nSession has been closed";
+        }
+        checker -= 1;
+        return "Input login: " + login +
+                "\nERROR" +
+                "\nWrong operation!" +
+                "\nChoose another operation or use /coffeeshop/restart (GET) to start again";
+    }
 
-//    @RequestMapping("/coffeeshop/users")
-//    @GetMapping
-//    public ArrayList<User> getUsers() {
-//        return BD.getUsers();
-//    }
-//
+    @RequestMapping("/coffeeshop/feedback")
+    @PostMapping
+    public String feedback(@RequestParam String login) {
+        checker += 1;
+        if (currentLogin == null) {
+            checker -= 1;
+            return "Input login: " + login +
+                    "\nERROR!" +
+                    "\nWrong operation! First you need to authorize" +
+                    "\nAuthorize or use /coffeeshop/restart (GET) to start again";
+        }
+        if (login.equals(currentLogin) && checker == 4) {
+            restart();
+            return "Input login: " + login + "\nUser has successfully feedbacked" +
+                    "\n you can choose another user";
+        } else if (!login.equals(currentLogin)) {
+            restart();
+            return "Input login: " + login +
+                    "\nERROR" +
+                    "\nCurrent session was opened for another user" +
+                    "\nSession has been closed";
+        }
+        checker -= 1;
+        return "Input login: " + login +
+                "\nERROR" +
+                "\nWrong operation!" +
+                "\nChoose another operation or use /coffeeshop/restart (GET) to start again";
+    }
+
+    @RequestMapping("/coffeeshop/restart")
+    @PostMapping
+    private void restart() {
+        currentLogin = null;
+        checker = 0;
+    }
 
 }
