@@ -86,7 +86,7 @@ public class CoffeeShopController {
                 "\nChoose another operation or use /coffeeshop/restart (POST) to start again";
     }
 
-    @RequestMapping("/coffeeshop/feedback")
+    @RequestMapping("/coffeeshop/payment")
     @PostMapping
     public String feedback(@RequestParam String login) {
         checker += 1;
